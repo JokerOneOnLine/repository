@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.UserMapper">
+	<!-- 
+	 *更新 添加user学历数据
+	 *第四次更新 渭南师范二期 杨璐 2017-08-27简历只有一个
+	 *第四次更新 渭南师范二期 杨璐 2017-08-26查询简历时不使用懒加载
+	 *第三次更新 渭南师范二期 张四宝 2017-08-24 
+	 *
+	 * 第二次更新 渭南师范二期 李晨晨 2017-08-24 
+	 * 
+	 *蓝桥软件学院 渭南师范二期-郝磊
+	 *2017年8月24日 上午9:38:16
+	 * @param 用户增删改查
+	 * @return
+	 -->
+	<!-- 
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	 -->
+	<!-- 添加用户 -->
+	<insert id="insertUser" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into users values(null,null,#{email},#{pwd},null,null,null,null,null,null,null,null,null)
+	</insert>
+	
+	<!-- 删除用户信息 -->
+	
+	
+	<insert id="userRegist" keyColumn="id" keyProperty="id">
+		insert into users(email,pwd) values(#{email},#{pwd})
+ 	</insert>
+	
+	<delete id="deleteUser">
+		delete from users where id=#{id}
+	</delete>
+	
+	<resultMap type="User" id="UserMap">
+		<id property="id" column="id" />
+		<result property="email" column="email" />
+		<result property="pwd" column="pwd" />
+		<result property="name" column="name" />
+		<result property="birth" column="birth" />
+		<result property="tel" column="tel"/>
+		<result property="gender" column="gender" />
+		<result property="addr" column="addr" />
+		<result property="profile" column="profile" />
+		<result property="declaration" column="declaration"/>
+		<association property="myResume" javaType="Myresume" select="org.lanqiao.mapper.user.MyResumeMapper.selectResumeByUserId" column="id" fetchType="eager"></association>
+	</resultMap>
+	<resultMap type="User" id="UserInfoMap">
+		<id property="id" column="id" />
+		<result property="email" column="email" />
+		<result property="pwd" column="pwd" />
+		<result property="name" column="name" />
+		<result property="birth" column="birth" />
+		<result property="tel" column="tel"/>
+		<result property="gender" column="gender" />
+		<result property="addr" column="addr" />
+		<result property="profile" column="profile" />
+		<result property="declaration" column="declaration"/>
+	</resultMap>
+	
+	<select id="getUserInfo" resultMap="UserInfoMap">
+	   select * from users where id=#{id}
+	</select>
+	
+	<!-- 根据id查询用户信息 -->
+	<select id="selectUser" resultMap="UserMap">
+		select * from users where id=#{id}
+	</select>
+	
+	<!-- 根据邮箱查询用户 -->
+	<select id="selectUserByEmail" resultType="User">
+		select * from users where email=#{email}
+	</select>
+	
+	<!-- 根据邮箱和密码查询用户 -->
+	<select id="selectUserByEmailAndPwd" resultMap="UserMap">
+		select * from users where email=#{email} and pwd=#{pwd}
+	</select>
+	<!-- 
+	通过ID获取用户信息
+	 -->
+	<resultMap type="User" id="getUserMap" autoMapping="true">
+		<association property="educationName" select="org.lanqiao.mapper.user.EducationalBackgroundMapper.getEducation" column="education"></association>
+		<association property="workName" select="org.lanqiao.mapper.user.WorkExperienceMapper.getExperience" column="workyear"></association>
+		<association property="position3Name" select="org.lanqiao.mapper.user.PositionMapper.getPosition" column="position3"></association>
+	</resultMap>
+	<select id="getUserById" resultMap="getUserMap">
+		select * from users where id=#{id}
+	</select>
+	<!-- 更改用户信息 -->
+	<!-- 
+	<update id="updateUser">
+		update users set email=#{email},pwd=#{pwd} where id=#{id}
+	</update>
+	 -->
+	 <!-- 更改用户信息刘如艳 -->
+	 <update id="updateUser">
+	 	update users set name=#{name},addr=#{addr},pwd=#{pwd},gender=#{gender},birth=#{birth},tel=#{tel},profile=#{profile},declaration=#{declaration} where id=#{id}
+	 </update>
+	 <update id="update">
+	 
+	 update users set name=#{name},position3=#{position3},birth=#{birth},gender=#{gender},addr=#{addr},tel=#{tel},declaration=#{declaration},education=#{education},workyear=#{workyear} where id=#{id}
+	 </update>
+</mapper>

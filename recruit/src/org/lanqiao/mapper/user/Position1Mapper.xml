@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.Position1Mapper">
+    <!-- 渭南师范二期梁琼  * 2017年8月25日 上午9:35:34 修改 -->
+	<!-- 渭南师范二期 许园园  * 2017年8月24日 上午16:59:19 -->  
+ 	<cache></cache>
+ 	<resultMap type="Position1" id="position1Map">
+ 			<id column="id" property="id"/>
+ 			<result column="name" property="name"/>
+ 		<collection fetchType="eager" property="positions2" javaType="List" ofType="Position2" select="org.lanqiao.mapper.user.Position2Mapper.selectPosition2" column="id"></collection>
+ 	</resultMap>
+ 	<!-- 根据一级职位的id查询一个带着二级职位的一级职位 -->
+	<select id="selectPositions2" resultMap="position1Map">
+		select * from positions1 where id=#{id}
+	</select> 
+ 	<!--查询所有一级职位 -->  
+	<select id="selectPositions1" resultMap="position1Map" >
+		select * from positions1
+	</select>
+	<!-- 增加一个一级职位 -->
+	<insert id="insertPosition1" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+		insert into positions1 values(null,#{name})
+	</insert>
+	<!-- 删除一个职位 -->
+	<delete id="deletePosition1">
+		delete from positions1 where id=#{id}
+	</delete>
+	<!-- 更新一个职位 -->
+	<update id="updatePosition1">
+		update positions1 set name=#{name} where id=#{id}
+	</update>
+	 
+</mapper>

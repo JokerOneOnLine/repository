@@ -1,0 +1,122 @@
+/* 蓝桥招聘*/
+
+/* 注册*/
+#reg-submit{width:155px; height:46px;font-size:16px; line-height:46px; clear:both; float:left; background:#019875; color:#fff; border:none; text-align:center;}
+.submitLogin{width:155px; height:46px;font-size:16px; line-height:46px; clear:both; float:left; background:#019875; color:#fff; border:none; text-align:center;}
+#loginForm a{ color: #fff}
+#reg-submit:hover{ background:#00694e;}
+.again-send{display:inline-block;position:relative;padding:0 12px;height:25px;overflow:hidden;font-size:13px;margin-bottom:25px;text-align:center;cursor:pointer}
+.reg-emailForm{ margin-top: 30px}
+/*职位*/
+#search_position{ width:544px;border:2px solid #019875;height:37px; }
+.workplace_position{ width: 580px}
+.financing{ width: 700px}
+.look-position{ }
+.look-position a{ text-decoration: none}
+.look-position a:nth-child(2){ float: right}
+.look-other{ background: none}
+.position_box{ width: 675px;border:2px solid #019875;height:37px; position:relative;margin-bottom: 20px}
+.position_form{}
+.position_form .position_input{ width:300px; height:23px; line-height:23px;float:left;font-size:16px;padding:7px 8px 7px 10px;margin:0 0 0 94px;border:none;}
+.position_form .position_button{ height:37px;width:135px; color:#FFF; font-size:18px;border:none;background:#019875;float:right; cursor:pointer;}
+/* 职位详情*/
+.position_tou{ margin-left: 20px;}
+ h3.interview{ font-size:16px; color:#555; border-left:7px solid #91cebe; padding:2px 0 0 7px; line-height:16px; margin-bottom:20px;}
+.interview a{ color: #019875;float: right; font-size: 14px}
+.work_address{ color: #019875;}
+/* 公司列表*/
+.number_green{ color:#019875;display: inline-block; font-weight: bold;min-width: 30px;margin-right: 5px}
+ul.company_infor{ margin-top: 30px;height: 40px; line-height: 50px;border-top: 1px solid #cbcbcb;border-bottom: 1px solid #cbcbcb}
+ul.company_infor li{ float: left;}
+ul.company_infor li:first-child{ float: left;}
+ul.company_infor li:nth-child(2){ float: right;padding-right: 5px}
+ul.company_infor li span{ position: relative;bottom: 4px}
+.content_r .recommend{ margin: 40px 0}
+/* 公司主页*/
+/*.container_recruit{ width:100%;margin:35px 5px; padding-bottom:100px;background-color: #fff;height: 200px;}*/
+.recruit_top{ width: 1024px;background-color: #fafafa;height: 200px;border: 1px solid #fafafa;}
+.recruit_img{ float: left;padding: 10px}
+.recruit_infor{ float: left;margin-top: 20px}
+.recruit_infor h2{ font-size: 18px;font-weight: bold;color: #555555}
+.profiles{ font-size: 15px;margin-top: 10px;display: inline-block}
+.infor_bottom{ margin-top: 20px;}
+.infor_bottom ul{ height: 60px;line-height: 30px;}
+.infor_bottom ul li{ }
+.infor_bottom ul li{ float: left;list-style: none;width: 120px;text-align: center;border-right: 1px solid #cbcbcb;padding-right: 10px }
+.positions_now{ color: #555555}
+.amount{ color:#019875;font-weight: bold;font-size: 16px}
+
+#outer {width: 1024px;margin:0 auto;background: #fafafa;}
+#tab {overflow:hidden;zoom:1;background:#fafafa;width: 400px}
+#tab li {float:left;height:60px;cursor:pointer;	line-height:60px;padding:0 50px;font-size: 16px;}
+#tab li.current {color:#000;border-bottom:2px solid #019875;}
+#content {background: #fafafa;}
+#content ul{ width: 720px;}
+#content ul {line-height:25px;display:none;	margin:0 30px;padding:10px 0;}
+#content ul li{ list-style: none}
+.company_index{ width: 720px;border-right: 2px solid #EBF0EF}
+.company_content{ margin-bottom: 30px}
+.company_index h2{ font-weight: bold}
+.product_company { padding-top: 20px;display: inline-block;width: 220px;}
+.product_company img{ }
+.product_intro{ display: inline-block;width: 450px;position: relative;top: -120px}
+.product_intro span{ font-size: 17px;font-weight: inherit;display: inline-block;padding-bottom: 10px}
+.company_intro{ width: 700px;}
+.interview_eva{ width: 680px;padding-bottom: 20px;border-bottom: 1px dashed #A0A0A0}
+.interview_eva table{ font-size: 14px;}
+.interview_eva table td{ }
+.interview_eva table td span.com_start{ display:inline-block;*display:inline;*zoom:1;width:24px;height:23px;background:url(img/starsPop.png) left top no-repeat;}
+.interview_eva table td span.yellow{ display:inline-block;*display:inline;*zoom:1;width:24px;height:23px;background:url(img/starsPop.png) right top no-repeat;}
+.score_b{ font-size: 25px;color: #f00;}
+.score_s{ font-size: 16px;color: #f00;}
+.interview_num{ color: #A0A0A0}
+.td_right{ padding:0 10px;color: #A0A0A0}
+.company_base{ float: right;position: relative;right: 20px;padding-top: 20px}
+.company_base h2{ font-weight: bold}
+.company_base ul{ margin-bottom: 30px}
+.company_base ul li{ line-height: 30px;list-style: none}
+.company_base ul.c_feature li span{ min-width: 50px}
+.company_base ul.company_label{ width: 200px}
+.company_base ul.company_label li { margin: 8px ;border-radius: 5px;height: 20px;line-height: 20px;white-space:nowrap;float: left;list-style: none;border:1px solid #cbcbcb; background:#fff; font-size:12px; color:#777;}
+.company_base ul.company_label li span{ float: left;padding:0 3px;}
+.company_position{}
+.company_position h1{ font-size: 17px;line-height: 30px;height: 20px}
+.company_position h1 span{ color: #019875;padding: 0 3px;font-weight: bold}
+.company_position h1 span.job_line{ width: 470px;display: inline-block;border-top: 1px solid #cbcbcb;padding-bottom: 5px}
+.company_position .po{ }
+.company_position .po{border:1px solid #cbcbcb;background:#f2f2f2;padding:12px 20px 5px;margin-top: 30px;width: 650px}
+.company_position .po dl{overflow:hidden;margin-bottom:10px}
+.company_position .po dl dt{width:60px;font-size:14px;font-weight:600;float:left}
+.company_position .po dl dd{margin-left:35px}
+.company_position .po dd a{float:left;padding:0 8px;margin-right:10px;white-space:nowrap;-webkit-transition:all .2s ease 0s;-moz-transition:all .2s ease 0s;-ms-transition:all .2s ease 0s;transition:all .2s ease 0s}
+.company_position .po dd a.current,.company_position .po dd a:hover{color:#fff;background:#019875}
+.job_list{ margin-top: 20px;padding: 5px 0px 5px 10px;width: 678px;border: 1px solid #cbcbcb;border-left: 4px solid #019875;background-color: #fff}
+.job_list dt{ }
+.job_list dd{ margin-top: 10px;font-size: 14px}
+.job_list dt a{ color: #019875;cursor: pointer;font-size: 16px;}
+.job_list dt span.job_time{ float: right;margin-right: 20px;color: #777}
+.job_list dd span.job_salary{ color: #f00;padding-right: 20px}
+
+/* 简历*/
+.jianli_textarea{ width: 390px; height: 50px;font-size: 14px;}
+.content_r .navigation_resume{ margin-bottom:8px;}
+.content_r .navigation_resume ul{ width: 300px;height: 300px;margin: 0 auto}
+.content_r .navigation_resume ul li{ width: 60px;padding-top: 20px;height: 30px;line-height: 30px;list-style: none;}
+.content_r .navigation_resume ul li:hover{ border-bottom: 5px solid #019875;}
+.mycenterR .preview_resume{ color: #019875;text-decoration: none;padding-top: 10px;font-size: 16px}
+.mycenterR .preview_resume:hover{ text-decoration: underline;}
+/* 简历管理*/
+.company_center_aside .receive_resume{ background-color: #91CEBE;color: #fff;border-radius: 5px}
+.company_center_aside .receive_resume a{color: #fff;}
+.company_center_aside .receive_resume:hover{ background-color: #019875;color: #fff;}
+
+
+
+
+
+
+
+
+
+
+

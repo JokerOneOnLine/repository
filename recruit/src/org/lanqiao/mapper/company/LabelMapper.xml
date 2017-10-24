@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.lanqiao.mapper.company.LabelMapper">
+ 		<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+		<resultMap type="Label" id="labelMap">
+			<id column="company_label_id" property="id" />
+			<result column="company_id" property="companyId" />
+			<result column="tag_id" property="tagId" />
+		</resultMap>
+  		<!-- Label增加 -->
+  		<insert id="insertLabel" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+  			insert into company_to_tag values (null,#{companyId},#{tagId})
+  		</insert>
+  		
+  		<!-- Label删除 -->
+  		<delete id="deleteLabel">
+			delete from company_to_tag where company_label_id=#{id}  		
+  		</delete>
+		
+		<!-- Label更改 -->
+		<update id="updateLabel">
+			update company_to_tag set company_id=#{companyId}, tag_id=#{tagId} where company_label_id=#{id}
+		</update>
+		<!-- Label查询一个值 -->
+		<select id="getLabelById" resultMap="labelMap">
+			select * from company_to_tag where company_label_id=#{id}
+		</select>
+	
+		<!-- Label查询一个集合 -->
+		<select id="getLabels" resultMap="labelMap">
+			select * from company_to_tag
+		</select>
+		
+		<!-- 根据公司id查询标签id集合 -->
+  		<select id="getTagIds" resultType="int">
+  			select tag_id from company_to_tag where company_id = #{companyId}
+  		</select>
+  		
+  </mapper>

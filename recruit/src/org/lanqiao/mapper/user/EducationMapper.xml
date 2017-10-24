@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.EducationMapper">
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache> -->
+	
+	<!-- 根据userid获取educations -->
+	<select id="getEducationByUserid" resultType="Education">
+		select * from educations where myresume_id=(
+		select id from myresumes where userid=#{userid}
+		)
+	</select>
+
+	<delete id="deleteEducation">
+		delete from educations where id=#{id}
+	</delete>
+
+	<insert id="insertEducation" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into educations values
+		(null,#{schoolName},#{major},#{educational},#{graduate},#{myResuemeId})
+	</insert>
+
+	<update id="updateEducation">
+		update educations set
+		schoolName=#{schoolName},major=#{major},educational=#{educational},graduate=#{graduate}
+		where id=#{id}
+	</update>
+
+	<select id="selectEducation" parameterType="int" resultType="Education">
+		select * from educations where id=#{id}
+	</select>
+
+	<select id="selectEducationByMyResumeId" resultType="Education">
+		select * from educations where myresume_id=#{myResuemeId}
+	</select>
+</mapper>

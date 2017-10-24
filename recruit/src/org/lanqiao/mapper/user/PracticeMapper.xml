@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.PracticeMapper">
+  <!-- 
+  
+  <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache> 
+   -->  
+   
+   <!-- 根据userid查询practice -->
+     <select id="getPracticeByUserid" resultType="Practice">
+        select * from practices where myresume_id=(
+        select id from myresumes where userid=#{userid}
+        )
+     </select>
+   
+     <!-- 查询工作经历 --><!-- 王笑 -->
+	<select id="selectPractice" parameterType="int" resultType="Practice">
+	    select * from practices where id=#{id}
+	</select>
+     <!-- 删除工作经历 -->
+	<delete id="deletePractice" > 
+	    delete from practices where id=#{id}
+	</delete>
+    <!-- 更新工作经历 -->
+	<update id="updatePractice" >
+	    update practices set company=#{company},position=#{position},starttime=#{starttime},endtime=#{endtime},workContent=#{workContent} where id=#{id}
+	</update>
+    <!-- 插入工作经历 -->
+	<insert id = "insertPractice" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+	    insert into practices values(null,#{company},#{position},#{starttime},#{endtime},#{workContent},#{myResuemeId})
+	</insert>
+	<!-- 根据简历的id工作经历 -->
+	<select id="selectPracticeByMyResumeId" resultType="Practice"  >
+	    select * from practices where myresume_id=#{myResumeId}
+	</select>
+
+</mapper>

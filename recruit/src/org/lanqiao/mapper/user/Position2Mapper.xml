@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.Position2Mapper">
+	<!-- 渭南师范二期梁琼 * 2017年8月25日 上午9:35:34-->
+	<cache></cache>
+	
+	<resultMap type="Position2" id="Position2Map">
+	    <id column="id" property="id"></id>
+	    <result column="name" property="name"/>
+	    <result column="p1_id" property="p1Id"/>
+		<collection fetchType="eager" property="positions" javaType="List" ofType="Position" select="org.lanqiao.mapper.user.PositionMapper.selectPosition" column="id"></collection>
+	</resultMap>
+	
+	<!-- 查询所有二级职位 -->
+	<select id="selectAllPosition2" resultMap="Position2Map">
+		select * from positions2
+	</select>
+	 
+	<!-- 根据一级职位ID查询 带着三级职位的所有二级职位-->
+	<select id="selectPosition2" resultMap="Position2Map">
+		select * from positions2 where p1_id=#{p1Id}
+	</select>
+	<!-- 根据一级职位ID查询二级职位 -->
+	<select id="getPosition2" resultType="Position2">
+		select * from positions2 where p1_id=#{p1Id}
+	</select>
+	<!-- 增加二级职位 -->
+	<insert id="insertPosition2" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into positions2 values(null,#{name},#{p1Id})
+	</insert>
+	<!-- 删除二级职位 -->
+	<delete id="deletePosition2">
+		delete from positions2 where id=#{id}
+	</delete>
+	<!-- 修改二级职位 -->
+	<update id="updatePosition2"> 
+		update positions2 set name=#{name},p1_id=#{p1Id} where id=#{id}
+	</update>
+	<!-- 分页显示职位用到通过ID去查询职位 刘如艳-->
+	<select id="getPositions" resultType="String">
+		select name from positions2 where id=#{id}
+	</select>
+	
+	<!--发布职位的时候通过名字找id-->
+	<select id="getId" resultType="Integer" >
+		select id from positions2 where name=#{name}
+	</select>
+	
+	<!-- 根据以及职位id和二级职位名字查询二级职位的id -->
+	
+	<select id="getPosition2IdByp1IdAndP2Name" resultType="Integer">
+		select id from positions2 where name=#{name} and p1_id=#{id}
+	</select>
+	<select id="getIdByP3Id" resultType="Integer">
+		select p2_id from positions3 where id=#{id}
+	</select>
+</mapper>

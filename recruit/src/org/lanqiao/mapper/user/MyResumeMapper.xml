@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.lanqiao.mapper.user.MyResumeMapper">
+	<!-- 
+	
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	
+	 -->
+	<!-- 增加我的简历 -->
+	<insert id="insertMyresume" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into myResumes values(null,#{userId},1)
+	</insert>
+	<!-- 查询简历 -->
+	<resultMap type="MyResume" id="myResume">
+		<id column="id" property="id" />
+		<association property="education" javaType="Education"
+			select="org.lanqiao.mapper.user.EducationMapper.selectEducationByMyResumeId"
+			column="id"></association>
+		<association property="practice" javaType="Practice"
+			select="org.lanqiao.mapper.user.PracticeMapper.selectPracticeByMyResumeId"
+			column="id"></association>
+		<association property="hopeJob" javaType="HopeJob"
+			select="org.lanqiao.mapper.user.HopeJobMapper.selectHopeJobsByMyResumedId"
+			column="id"></association>
+		<association property="project" javaType="Project"
+			select="org.lanqiao.mapper.user.ProjectMapper.selectProjectByMyResumeId"
+			column="id" fetchType="eager"></association>
+		<association property="user" javaType="User"
+		select="org.lanqiao.mapper.user.UserMapper.getUserById" column="userid"
+		></association>
+	</resultMap>
+	<select id="selectResumeByUserId" resultMap="myResume">
+		select * from myResumes where userid=#{userId}
+	</select>
+	<select id="getResumeByUserId" resultType="MyResume">
+		select * from myResumes where userid=#{userid}
+	</select>
+	<select id="selectResumeById" resultMap="myResume">
+		select * from myresumes where id=#{id}
+	</select>
+	<delete id="deleteMyresumeByUserId">
+		delete from myResumes where userid=#{userId}
+	</delete>
+
+</mapper>

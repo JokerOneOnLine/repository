@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<context:component-scan base-package="org.lanqiao">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<context:property-placeholder location="classpath:jdbcinfo.properties" />
+	<bean id="ds" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${mysql.driver}"></property>
+		<property name="jdbcUrl" value="${mysql.url}"></property>
+		<property name="user" value="${mysql.user}"></property>
+		<property name="password" value="${mysql.pwd}"></property>
+	</bean>
+
+	<!-- 配置sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"></property>
+		<property name="typeAliasesPackage" value="org.lanqiao.entity"></property>
+		<property name="configuration">
+			<bean class="org.apache.ibatis.session.Configuration">
+				<property name="cacheEnabled" value="true"></property>
+				<property name="useGeneratedKeys" value="true"></property>
+				<property name="lazyLoadingEnabled" value="true"></property>
+				<property name="aggressiveLazyLoading" value="false"></property>
+			</bean>
+		</property>
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:org/lanqiao/mapper/company/*.xml</value>
+			</array>
+		</property>
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>
+							 helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+
+	</bean>
+
+	<!-- 配置一个mapperScannerConfigurer能自动产生代理对象并放入Ioc容器里 -->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="org.lanqiao.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	<!-- 上传图片文件解析器 -->
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+
+	<!-- 配置事务属性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置aop -->
+	<aop:config>
+		<aop:pointcut expression="execution(* org.lanqiao.aop.*.*(..))"
+			id="pct" />
+
+		<aop:pointcut expression="execution (* org.lanqiao.service.*.*.*(..))"
+			id="tpct" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="tpct" />
+
+	</aop:config>
+</beans>

@@ -1,0 +1,12 @@
+/CompanyEnterTeam.jsp
+/companyInfo.jsp
+/companylist.jsp
+/companyPage.jsp
+/companyProduct.jsp
+/companyTag.jsp
+/CompanyWating.jsp
+/create.jsp
+/company/EffectivePosition.jsp
+/resumeManagement.jsp
+/company/OutLine.jsp
+/company/post.jsp

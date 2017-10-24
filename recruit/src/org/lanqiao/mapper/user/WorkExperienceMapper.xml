@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.WorkExperienceMapper">
+	<cache></cache>
+
+	<select id="selectAllWorkExperience" resultType="WorkExperience">
+		select * from work_experience
+	</select>
+	<!-- 刘如艳 分页查询上下限职位时封装post对象要用到 -->
+	<select id="getExperience" resultType="String" >
+		select name from work_experience where id=#{workExperience}
+	</select>
+	<select id="selectExperience" resultType="WorkExperience" >
+		select * from work_experience where id=#{id}
+	</select>
+	<!--发布职位的时候通过名字找id-->
+	<select id="getId" resultType="Integer" >
+		select id from work_experience where name=#{name}
+	</select>
+	<select id="getName" resultType="String">
+		select  name from work_experience where id=#{id}
+	
+	</select>
+	
+</mapper>

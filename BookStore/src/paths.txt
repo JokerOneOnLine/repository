@@ -1,0 +1,13 @@
+/user/userInfo.jsp
+/user/toOrder.jsp
+/user/orders.jsp
+/UserServlet/logout
+/BookServlet/consult
+/UserServlet/addToCart
+/UserServlet/removeItem
+/UserServlet/modifyItem
+/UserServlet/order
+/UserServlet/addConsignee
+/UserServlet/toOrder
+/UserServlet/getOrders
+/UserServlet/recharge

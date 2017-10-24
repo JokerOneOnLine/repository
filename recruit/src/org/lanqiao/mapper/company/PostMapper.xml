@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.lanqiao.mapper.company.PostMapper">
+ 	<!-- 
+	 	 蓝桥软件学院 渭南师范二期-郝磊
+	  	2017年8月25日 下午3:49:27
+ 	 -->
+ 	<!-- 修改增加职位刘如艳 -->
+  	<insert id="insertPost" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
+  		insert into posts values(null,#{companyID},#{postType},#{postName},#{department},#{jobCategory},#{minSalary},#{maxSalary},#{workCity},#{workExperience},#{education},#{jobTempt},#{jobInfo},#{workSpeace},#{acceptEmail},#{online},#{Date})
+  	</insert>
+  	
+  	<!-- 删除职位 -->
+  	<delete id="deletePost">
+  		delete from posts where id=#{id}
+  	</delete>
+  	
+  	<!-- 修改职位 -->
+  	<update id="updatePost">
+  		update posts set jobCategory=#{jobCategory},minSalary=#{minSalary},maxSalary=#{maxSalary},workCity=#{workCity},workExperience=#{workExperience},education=#{education},jobTempt=#{jobTempt},jobInfo=#{jobInfo},workSpeace=#{workSpeace},acceptEmail=#{acceptEmail} 
+  		,online=#{online},Date=#{Date} where id=#{id}
+  	</update>
+  	
+  	<!-- 查询职位 -->
+  	<select id="selectPost" resultMap="getPageMap">
+  		select * from posts where id=#{id}
+  	</select>
+  	
+  	<!-- 公司细节需要展示的内容   liangq -->
+  	<select id="selectCompanyTags" resultType="org.lanqiao.entity.company.Tag">
+  		SELECT tag content,id,company_id companyId FROM company_tags WHERE company_id =(
+			SELECT companyID FROM posts WHERE id = #{id})
+  	</select>
+  	<select id="selectDetails" resultType="org.lanqiao.entity.company.postDetail">
+  		SELECT 
+		  p.*,
+		  p2.name p2name,
+		  p3.name p3name,
+		  cb.company_logo companyLogo,
+		  eb.name ebName,
+		  we.name weName,
+		  cb.company_scale scale,
+		  cb.company_domain companyDomain,
+		  cb.company_name companyName,
+		  cb.company_url companyUrl,
+		  cb.company_info companyInfo
+		FROM
+		  posts p 
+		  LEFT JOIN positions2 p2 ON p.postType = p2.id 
+		  LEFT JOIN positions3 p3 ON p.postName = p3.id 
+		  LEFT JOIN company_baseinfo cb ON p.companyid = cb.company_id 
+		  LEFT JOIN educational_background eb ON p.education = eb.id 
+		  LEFT JOIN work_experience we ON p.workexperience = we.id
+	    where p.id=#{id}
+  	</select>
+  	<!-- 模糊查询公司ID -->
+  	<select id="selectPostLike" resultType="org.lanqiao.entity.company.PostSearch">
+		SELECT 
+		  p.*,
+		  p2.name p2name,
+		  p3.name p3name,
+		  cb.company_logo logo,
+		  eb.name ebName,
+		  we.name weName,
+		  cb.company_scale scale,
+		  cb.company_domain domain,
+		  cb.company_name companyName,
+		  ce.founder_name founderName 
+		FROM
+		  posts p 
+		  LEFT JOIN positions2 p2 ON p.postType = p2.id 
+		  LEFT JOIN positions3 p3 ON p.postName = p3.id 
+		  LEFT JOIN company_baseinfo cb ON p.companyid = cb.company_id 
+		  LEFT JOIN educational_background eb ON p.education = eb.id 
+		  LEFT JOIN work_experience we ON p.workexperience = we.id 
+		  LEFT JOIN company_enterteam ce ON ce.company_id = p.companyID
+		WHERE online = 1 
+  		 	and CONCAT(p2.name ,p3.name ,p.workcity,cb.company_name) 
+  		 	LIKE '%${keyName}%'
+			and maxSalary between #{min} and #{max}
+  		<if test="1!=wName">
+			and workExperience=#{wName}
+		</if>
+		<if test="1!=eName">
+		  	and education=#{eName}
+		</if>
+		<if test="city!='全国'">
+			and workCity=#{city}
+		</if>
+  	</select>
+  	<!-- 查询所有 -->
+  	<select id="selectAll" resultType="post">
+  		select * from posts
+  	</select>
+	
+  	<!-- 根据公司id查询post 刘如艳 杨璐-->
+  	<resultMap type="Post" id="getPageMap">
+  	       <id column="id" property="id"/>
+  	       <result column="postName" property="postName"/>
+  	       <result column="workExperience" property="workExperience"/>
+  	       <result column="education" property="education"/>
+  		<collection property="workName" select="org.lanqiao.mapper.user.WorkExperienceMapper.getExperience" javaType="String" column="workExperience"></collection>
+  		 <collection property="eName" select="org.lanqiao.mapper.user.EducationalBackgroundMapper.getEducation" javaType="String" column="education"></collection>
+  		 <collection property="p2Name" select="org.lanqiao.mapper.user.Position2Mapper.getPositions" javaType="String" column="postType"></collection>
+  		 <collection property="p3Name" select="org.lanqiao.mapper.user.PositionMapper.getPosition" javaType="String" column="postName"></collection>
+  		 <collection property="postAndResumes" select="org.lanqiao.mapper.company.PostAndResumeMapper.selectpar" ofType="PostAndResume" column="id"></collection>
+  	</resultMap>
+  	<select id="getPostByCompanyId" resultMap="getPageMap">
+  		select * from posts where companyID=#{companyID}
+  	</select>
+  	<!-- 
+  	<select id="getPostBaseInforId" resultType="post">
+  		select * from posts where companyID=#{companyID}
+  	</select>
+  	 -->
+  	
+  	
+  	
+  	
+  	<!-- 查询下线职位 -->
+  	<select id="getOutlinePost" resultType="Post">
+  		select * from posts where companyid= #{companyid} and online = 0;
+  	</select>
+  	
+  	<!-- 查询上线职位 -->
+  	<select id="getOnlinePost" resultType="Post">
+  		select * from posts where companyid= #{companyid} and online = 1;
+  	</select>
+  	<!-- 分页查询上下线职位刘如艳-杨璐 -->
+  	<resultMap type="Post" id="pagePostMap" autoMapping="true">
+  		<collection property="workName" select="org.lanqiao.mapper.user.WorkExperienceMapper.getExperience" javaType="String" column="workExperience"></collection>
+  		 <collection property="eName" select="org.lanqiao.mapper.user.EducationalBackgroundMapper.getEducation" javaType="String" column="education"></collection>
+  		 <collection property="p2Name" select="org.lanqiao.mapper.user.Position2Mapper.getPositions" javaType="String" column="postType"></collection>
+  		 <collection property="p3Name" select="org.lanqiao.mapper.user.PositionMapper.getPosition" javaType="String" column="postName"></collection>
+  	</resultMap>
+  	<!-- 分页查询上下线职位按时间排序 杨璐 -->
+  	<select id="queryPosts" resultMap="pagePostMap">
+  		select * from posts where companyID=#{companyID}  and online=#{online}
+  		order by Date desc
+  	</select>
+  	<!-- 查询某公司上或下线职位的总记录 -->
+  	<select id="getCount" resultType="Integer" >
+  		select count(*) from posts where companyID=#{companyID} and online=#{online} 
+  	</select>
+  	
+  		<select id="selectPostAndResmes" resultMap="getPageMap" >
+  		 select * from posts where postName=#{postName} and companyID=#{companyID}
+  		</select>
+  		<!-- 我的投递箱-->
+	<select id="selectPost1" resultType="post">
+		select * from posts where id=#{id}
+	</select>
+  		
+  		
+  		
+  		
+  		
+  		<!-- 查询职位 -->
+
+	<select id="select" resultMap="postmapp">
+		select * from posts where id=#{id}
+	</select>
+	<resultMap type="Post" id="postmapp" autoMapping="true">
+		<association property="companyBaseInfo" column="companyID"
+			javaType="BaseInfo"
+			select="org.lanqiao.mapper.company.CompanyBaseInfoMapper.getBaseInfoByCompanyId">
+		</association>
+		<association property="position" column="id"
+			javaType="Position" select="org.lanqiao.mapper.user.PositionMapper.selectPositionById">
+		</association>
+	</resultMap>
+ </mapper>

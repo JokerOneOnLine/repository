@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.CompanyBaseInfoMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	<!--渭南师范二期-程建波 2017年8月24日上午8:53:50 -->
+	<resultMap type="org.lanqiao.entity.company.BaseInfo" id="baseInfoMap">
+		<id property="baseId" column="base_id" />
+		<result property="companyId" column="company_id" />
+		<result property="companyName" column="company_name" />
+		<result property="companyAbb" column="company_abb" />
+		<result property="companyLogo" column="company_logo" />
+		<result property="companyUrl" column="company_url" />
+		<result property="companyCity" column="company_city" />
+		<result property="companyDomain" column="company_domain" />
+		<result property="scale" column="company_scale" />
+		<result property="introduction" column="introduction" />
+		<result property="companyInfo" column="company_info" />
+	</resultMap>
+	<select id="getBaseInfoByCompanyId" resultMap="baseInfoMap">
+		select * from company_baseinfo where company_id=#{companyId}
+	</select>
+	<!-- 根据城市查询公司 杨萌 -->
+	<select id="getBaseInfoByCompanyCity" resultMap="baseInfoMap">
+			select * from company_baseInfo where company_city = #{companyCity}
+	</select>
+	<!-- 查询所有公司 杨萌 -->
+	<select id="getAllCompany" resultMap="baseInfoMap">
+		select * from company_baseInfo
+	</select>
+	<delete id="deleteBaseInfoByCompanyId">
+		delete from company_baseinfo where company_id=#{companyId}
+	</delete>
+	<update id="updataBaseInfoByCompanyId">
+		update company_baseinfo set
+		company_name=#{companyName},company_abb=#{companyAbb},company_logo=#{companyLogo},company_url=#{companyUrl},company_city=#{companyCity},company_domain=#{companyDomain},company_scale=#{scale},introduction=#{introduction},company_info=#{companyInfo}
+		where company_id=#{companyId}
+	</update>
+	<insert id="insertBaseInfo" useGeneratedKeys="true" keyProperty="baseId" keyColumn="base_id">
+		insert into company_baseinfo
+		values(null,#{companyId},#{companyName},#{companyAbb},#{companyLogo},#{companyUrl},#{companyCity},#{companyDomain},#{scale},#{introduction},#{companyInfo})
+	</insert>
+</mapper>

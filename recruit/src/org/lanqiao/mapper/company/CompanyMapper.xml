@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.CompanyMapper">
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache> -->
+	<resultMap type="CompanyRegist" id="companyRegistMap">
+		<id property="companyId" column="company_id" />
+		<result property="companyEmail" column="company_email" />
+		<result property="loginPwd" column="login_pwd" />
+		<!-- 公司基本信息 -->
+		<collection property="baseInfo" javaType="BaseInfo"
+			select="org.lanqiao.mapper.company.CompanyBaseInfoMapper.getBaseInfoByCompanyId" column="company_id" fetchType="eager"></collection>
+		<!-- 公司标签 -->
+		<collection property="tags" ofType="Tag" select="org.lanqiao.mapper.company.TagMapper.getTagByCompanyId"
+			column="company_id"></collection>
+		<!-- 公司团队 -->
+		<collection property="teams" ofType="CompanyEnterTeam"
+			select="org.lanqiao.mapper.company.CompanyEnterTeamMapper.getEnterTeamByComponyId" column="company_id"></collection>
+		<!-- 公司产品 -->
+		<collection property="product" ofType="CompanyProduct"
+			select="org.lanqiao.mapper.company.CompanyProductMapper.getProductByCompanyId" column="company_id"></collection>
+		<collection property="posts" ofType="Post" select="org.lanqiao.mapper.company.PostMapper.getPostByCompanyId"
+			column="company_id">
+		</collection>
+
+	</resultMap>
+
+	<!-- 根据id查询公司 -->
+	<select id="selectCompanyById" resultMap="companyRegistMap">
+		select * from
+		company_regist where company_id=#{id}
+	</select>
+
+	<!-- 注册添加公司 -->
+	<insert id="insertCompany" keyProperty="companyId" keyColumn="company_id">
+		insert into company_regist
+		values(null,#{companyEmail},#{loginPwd},#{authentication})
+	</insert>
+
+
+	<select id="getCompanyById" resultMap="companyRegistMap">
+	
+	select * from company_regist where company_id=#{companyId}
+	</select>
+
+	<!-- 查询 -->
+	<select id="getCompany" resultMap="companyRegistMap">
+		select * from company_regist
+		where company_email=#{companyEmail} and
+		login_pwd=#{loginPwd}
+	</select>
+
+	<!-- 更新公司信息 -->
+	<update id="updateCompany">
+		update company_regist
+		set
+		company_email=#{companyEmail},login_pwd=#{loginPwd},authentication=${authentication}
+		where
+		company_id=#{companyId}
+	</update>
+	<update id="update">
+	update company_regist
+		set
+		company_email=#{companyEmail},login_pwd=#{loginPwd},authentication=#{authentication}
+		where
+		company_id=#{companyId}
+	
+	
+	</update>
+	
+	
+	
+
+	<!-- 删除公司 -->
+	<delete id="deleteCompany" parameterType="int">
+		delete from
+		company_regist where company_id = #{id}
+	</delete>
+
+	<!-- 根据email查询公司 -->
+	<select id="selectCompanyByEmail" resultMap="companyRegistMap">
+		select * from
+		company_regist where company_email = #{companyEmail}
+	</select>
+
+	<!-- 查询所有公司 -->
+	<select id="selectAllCompany" resultMap="companyRegistMap">
+		select * from
+		company_regist
+	</select>
+
+	<!-- 通过审核 -->
+	<update id="toAuthentication" parameterType="int">
+		update
+		company_regist
+		set authentication=1 where
+		company_id=#{companyId}
+	</update>
+	<!-- 查询未通过审核的公司 -->
+	<resultMap type="CompanyRegist" id="companyNoMap">
+		<id property="companyId" column="company_id" />
+		<result property="companyEmail" column="company_email" />
+		<result property="loginPwd" column="login_pwd" />
+		<result property="authentication" column="authentication" />
+	</resultMap>
+	<select id="getAllNoCompany" resultMap="companyNoMap">
+		select * from company_regist where authentication=#{authentication}
+	</select>
+	<select id="getCompanyByCompanyId" resultMap="companyNoMap">
+		select * from company_regist where company_id=#{companyId}
+	</select>
+</mapper>

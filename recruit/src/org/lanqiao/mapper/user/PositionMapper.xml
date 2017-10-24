@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.PositionMapper">
+	<!--渭南师范二期 许园园       2017年8月24日 下午2:51:59  -->
+	<!-- 第二次更新 渭南师范二期   	 李晨晨  	2017年8月25日  -->
+	<cache></cache>
+	
+	<!-- 根据二级职位id查询对应的三级职位 -->
+	<resultMap type="Position" id="PositionMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="p2_id" property="p2Id"/>
+	</resultMap>
+	<select id="selectPosition" resultMap="PositionMap">
+		select * from positions3 where p2_id=#{p2_id}
+	</select>
+	
+	<!-- 插入一个三级职位 -->
+	<insert id="insertPosition" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into positions3 values(null,#{name},#{p2_id})
+	</insert>
+	
+	<!-- 修改一个三级职位 -->
+	<update id="updatePosition">
+		update positions3 set name=#{name},id=#{id}
+	</update>
+	
+	<!-- 删除一个三级职位 -->
+	<delete id="deletePosition">
+		delete  from positions3 where id=#{id}
+	</delete>
+	
+	<!-- 根据一个三级职位的id获取一个三级职位 -->
+	<select id="selectPositionById" resultType="Position">
+		select * from positions3 where id=#{id}
+	</select>
+	
+	<!-- 根据一个三级职位的name获取一个三级职位 -->
+	<select id="selectByName" resultType="Position">
+		select * from positions3 where name=#{name}
+	</select>
+	<!-- 根据关键字来查询数据 -->
+	<select id="likeSelectKeysByName" resultType="Position" >
+	select id , name from positions3 where name like'%${name}%'
+	</select>
+	<!-- 分页显示职位用到通过ID去查询职位刘如艳 -->
+	<select id="getPosition" resultType="String">
+		select name from positions3 where id=#{id}
+	</select>
+	<!--发布职位的时候通过名字找id-->
+	<select id="getId" resultType="Integer" >
+		select id from positions3 where binary name=#{name}
+	</select>
+	
+</mapper>

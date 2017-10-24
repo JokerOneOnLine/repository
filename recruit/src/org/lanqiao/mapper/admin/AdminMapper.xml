@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.admin.AdminMapper">
+	<!--渭南师范二期-程建波 2017年8月26日上午8:51:44 -->
+	<resultMap type="org.lanqiao.entity.admin.Admin" id="adminMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+	</resultMap>
+	<select id="adminLogin" resultMap="adminMap">
+		select * from admins where name=#{name}
+	</select>
+	<select id="getAdmin" resultMap="adminMap">
+		select * from admins where id=#{id}
+	</select>
+	<delete id="deleteAdmin">
+		delete from admins where id=#{id}
+	</delete>
+	<update id="updataAdmin">
+		update admins set name=#{name},password=#{password}where id=#{id}
+	</update>
+	<insert id="insertAdmin" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into admins
+		values(null,#{name},#{password})
+	</insert>
+</mapper>

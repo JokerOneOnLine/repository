@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.EducationalBackgroundMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	<select id="selectAllEducationalBackground" resultType="EducationalBackground">
+		select * from educational_background
+	</select>
+	<!-- 刘如艳 分页查询上下限职位时封装post对象要用到  -->
+	<select id="getEducation" resultType="String">
+		select name from educational_background where id=#{education}
+	</select>
+	<select id="selectEducation" resultType="EducationalBackground">
+		select * from educational_background where id=#{id}
+	</select>
+	<!--发布职位的时候通过名字找id-->
+	<select id="getId" resultType="Integer" >
+		select id from educational_background where name=#{name}
+	</select>
+	<select id="getName" resultType="String">
+		select name from educational_background where id=#{id}
+	</select>
+</mapper>

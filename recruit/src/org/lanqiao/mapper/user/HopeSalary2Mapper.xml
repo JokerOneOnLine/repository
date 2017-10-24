@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--   渭南师范蓝桥二期-艾辉 * 2017年8月28日 下午12:49:17 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.user.HopeSalary2Mapper">
+
+	<cache></cache>
+	<insert id="insertHopeSalary" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+		
+		insert into hopesalary values(null,#{name})
+	</insert>
+
+	<delete id="deleteHopeSalaryById">
+		delete from hopesalary where id=#{id}
+	</delete>
+
+	<update id="updateHopeSalary">
+		update hopesalary set name=#{name} where id=#{id}
+	</update>
+
+	<select id="selectHopeSalaryById" resultType="HopeSalary2">
+		select * from hopesalary where id=#{id}
+	</select>
+
+	<select id="selectHopeSalaryNameById" resultType="String">
+		select name from hopesalary where id=#{id}
+	</select>
+	
+	<select id="selectHopeSalarys" resultType="HopeSalary2">
+		select * from hopesalary
+	</select>
+
+</mapper>

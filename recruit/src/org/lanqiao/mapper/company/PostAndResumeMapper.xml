@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.PostAndResumeMapper">
+	<!-- 
+	
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	 -->
+
+	<insert id="insertpar">
+		insert into post_resume
+		values(#{postId},#{resumeId})
+	</insert>
+	<resultMap type="PostAndResume" id="parMap" autoMapping="true">
+		<result column="resumeId" property="resumeId"/>
+		<result column="postId" property="postId"/>
+		<collection property="resumes" column="resumeId" javaType="List"
+			ofType="MyResume" select="org.lanqiao.mapper.user.MyResumeMapper.selectResumeById"></collection>
+	</resultMap>
+	<select id="selectpar" resultMap="parMap">
+		select * from post_resume where
+		postId=#{postId}
+	</select>
+	<resultMap type="PostAndResume" id="pMap" autoMapping="true">
+		<result column="resumeId" property="resumeId"/>
+		<result column="postId" property="postId"/>
+		<collection property="posts" column="postId" javaType="List"
+			ofType="Post" select="org.lanqiao.mapper.company.PostMapper.select"></collection>
+	</resultMap>
+	<select id="getByResumeId" resultMap="pMap">
+		select * from post_resume where
+		resumeId=#{resumeId}
+	</select>
+</mapper>

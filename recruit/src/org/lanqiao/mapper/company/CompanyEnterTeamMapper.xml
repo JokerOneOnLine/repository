@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 渭南师院二期 樊璐璐 2017 08 24 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.CompanyEnterTeamMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	<resultMap type="CompanyEnterTeam" id="EnterTeamMap">
+		<id column="team_id" property="teamId" />
+		<result column="company_id" property="companyId" />
+		<result column="founder_name" property="founder" />
+		<result column="position" property="position" />
+		<result column="founder_surface" property="founderSurface" />
+		<result column="micro_blog" property="microBlog" />
+		<result column="founder_info" property="founderInfo" />
+	</resultMap>
+	<!-- 查询一条记录 -->
+	<select id="getEnterTeamByComponyId" resultMap="EnterTeamMap">
+		select * from
+		company_enterteam
+		where company_id=#{companyId}
+	</select>
+	<!-- 查询多条记录 -->
+	<select id="getAllEnterTeam" resultMap="EnterTeamMap">
+		select * from
+		company_enterteam
+	</select>
+	<!-- 插入一条记录-->
+	<insert id="insertEnterTeamToCompany" keyProperty="teamId"
+		keyColumn="team_id">
+		insert into company_enterteam
+		values(#{teamId},#{companyId},#{founder},#{position},#{founderSurface},#{microBlog},#{founderInfo})
+
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteEnterTeamByComponyId">
+		delete from company_enterteam where
+		company_id=#{companyId}
+	</delete>
+	<!-- 更新 -->
+	<update id="updateEnterTeamByComponyId">
+		update company_enterteam set
+		company_id=#{companyId},founder_name=#{founder},position=#{position},founder_surface=#{founderSurface},micro_blog=#{microBlog},founder_info=#{founderInfo}
+		where team_id=#{teamId}
+	</update>
+</mapper>

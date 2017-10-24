@@ -1,0 +1,7 @@
+/updatePwd.jsp
+/updateuser.jsp
+/myresume/myresume.jsp
+/myresume/user.jsp
+/myresume/position.jsp
+/myresume/show.jsp
+/myresume/userinfo.jsp

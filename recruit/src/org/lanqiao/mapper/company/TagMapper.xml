@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.TagMapper">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	<resultMap type="Tag" id="TagMap">
+		<id property="id" column="id" />
+		<result property="content" column="tag" />
+		<result property="companyId" column="company_id" />
+	</resultMap>
+
+	<!-- 添加标签  zjh -->
+	<insert id="insertTagTocompany" keyProperty="id" keyColumn="id">
+		insert into company_tags values(null,#{content},#{companyId})
+	</insert>
+
+	<!-- 根据公司id查询所有标签 -->
+	<select id="getTagByCompanyId" resultMap="TagMap">
+		select * from
+		company_tags where company_id=#{companyId}
+	</select>
+
+	<!-- Tag删除 -->
+	<delete id="deleteTag">
+		delete from company_tag where id=#{id}
+	</delete>
+
+	<!-- 根据id查询content -->
+	<select id="getStrTagById" resultType="string">
+		select content from
+		company_tag where id=#{id}
+	</select>
+</mapper>

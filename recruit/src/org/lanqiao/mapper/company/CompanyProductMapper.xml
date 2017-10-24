@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.mapper.company.CompanyProductMapper">
+			<!-- 公司产品的增删改查 -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+	<resultMap type="CompanyProduct" id="company">
+		<id column="product_id" property="productId"/>
+		<result column="poster" property="poster"/>
+		<result column="product_name" property="productName"/>
+		<result column="product_url" property="productUrl"/>
+		<result column="product_info" property="productInfo"/>
+		<result column="company_id" property="companyId"/>
+	</resultMap>		
+	<!-- 增加产品 -->
+	<insert id="insertCompanyProduct"  keyColumn="product_id" keyProperty="productId">
+		insert into
+		company_product values(null,#{poster},#{productName},#{productUrl},#{productInfo},#{companyId})
+	</insert>
+	<!-- 删除产品 -->
+	<delete id="deleteCompanyProduct" >
+		delete from  company_product where product_id=#{productId}
+	</delete>
+	<!-- 更新产品 -->
+	<update id="updateCompanyProduct" >
+		update company_product set
+		poster=#{poster},product_name=#{productName},product_url=#{productUrl},product_info=#{productInfo},company_id=#{companyId}
+		where product_id=#{productId}
+	</update>
+	<!-- 查询一个产品 -->
+	<select id="getCompanyProduct" resultType="CompanyProduct">
+		select * from company_product where product_id=#{productId}
+	</select>
+	<!-- 查询所有 -->
+	<select id="getAllCompanyProduct" resultMap="company">
+		select * from company_product
+	</select>
+	
+	<!-- 根据公司id查询产品 -->
+	<select id="getProductByCompanyId" resultMap="company">
+		select * from company_product where company_id = #{companyId}
+	</select>
+	
+</mapper>
